@@ -8,5 +8,7 @@ public class CommandKeywords {
     public static final String STOP_RIDE = "STOP_RIDE";
     public static final String BILL = "BILL";
 
-    private CommandKeywords() {}
+    private CommandKeywords() {
+        // Class for constants
+    }
 }

@@ -48,7 +48,7 @@ public class CommandLineRunner {
                 command.execute();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 }

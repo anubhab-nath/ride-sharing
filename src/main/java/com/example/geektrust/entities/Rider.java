@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Rider {
     private final String id;
     private final Location location;
-    private final ArrayList<Driver> nearestDrivers = new ArrayList<>();
+    private final ArrayList<Driver> matchedDrivers = new ArrayList<>();
 
     public Rider(String id, Location location) {
         this.id = id;
@@ -18,7 +18,7 @@ public class Rider {
     }
 
     public void findNearestDrivers(DriverRegistry driverRegistry) {
-        PriorityQueue<DriverDistancePair> distanceMap =
+        PriorityQueue<DriverDistancePair> nearestDriverMap =
                 new PriorityQueue<>((d1, d2) -> {
                     if(d1.distance == d2.distance) {
                         return d1.driver.compareTo(d2.driver);
@@ -31,24 +31,24 @@ public class Rider {
             if(distance > RiderKeywords.RIDER_RADIUS)
                 continue;
 
-            distanceMap.add(new DriverDistancePair(driver, distance));
+            nearestDriverMap.add(new DriverDistancePair(driver, distance));
         }
 
         for(int i = 0; i < RiderKeywords.MAX_NEAREST_DRIVERS; i++) {
-            if(!distanceMap.isEmpty()) {
-                nearestDrivers.add(distanceMap.poll().driver);
+            if(!nearestDriverMap.isEmpty()) {
+                matchedDrivers.add(nearestDriverMap.poll().driver);
             }
         }
     }
 
     public void printNearestDrivers() {
-        if(nearestDrivers.isEmpty()) {
+        if(matchedDrivers.isEmpty()) {
             System.out.println("NO_DRIVERS_AVAILABLE");
             return;
         }
         System.out.print("DRIVERS_MATCHED ");
 
-        System.out.println(nearestDrivers.stream()
+        System.out.println(matchedDrivers.stream()
                 .map(Driver::getId)
                 .collect(Collectors.joining(" "))
         );
@@ -76,11 +76,11 @@ public class Rider {
     }
 
     private boolean isDriverNotAvailable(Integer driverNum) {
-        return nearestDrivers.size() >= driverNum;
+        return matchedDrivers.size() < driverNum;
     }
 
     private Driver getNthNearestDriver(int driverNum) {
-        return nearestDrivers.get(driverNum - 1);
+        return matchedDrivers.get(driverNum - 1);
     }
 
     static class DriverDistancePair {

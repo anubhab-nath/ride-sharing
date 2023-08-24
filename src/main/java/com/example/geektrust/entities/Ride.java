@@ -4,7 +4,7 @@ public class Ride {
     private final String id;
     private Driver driver;
     private Rider rider;
-    private RideStatus rideStatus = RideStatus.COMPLETED;
+    private RideStatus rideStatus = RideStatus.CREATED;
 
     public Ride(String rideId) {
         this.id = rideId;
@@ -15,7 +15,7 @@ public class Ride {
     }
 
     public void printRideId() {
-        System.out.printf("RIDE_STARTED %s", this.id);
+        System.out.println("RIDE_STARTED " + this.id);
     }
 
     public void start(Rider rider, Driver driver) {

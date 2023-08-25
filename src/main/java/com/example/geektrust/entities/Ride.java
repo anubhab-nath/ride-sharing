@@ -57,11 +57,14 @@ public class Ride {
         else if(rideStatus != RideStatus.COMPLETED)
             throw new InvalidCommand();
 
+        System.out.printf("BILL %s %s %.2f%n", id, driver.getId(), getTotalAmount());
+    }
+
+    private double getTotalAmount() {
         double distanceCovered = Utility.calculateDistance(rider.getLocation(), destination);
         double amountWithoutTax = RideConstants.BASE_FARE
                 + Utility.roundOff(distanceCovered * RideConstants.CHARGE_PER_KM)
                 + timeTakenInMin * RideConstants.CHARGE_PER_MIN;
-        double totalAmount = Utility.roundOff((1 + RideConstants.SERVICE_TAX) * amountWithoutTax);
-        System.out.printf("BILL %s %s %.2f%n", id, driver.getId(), totalAmount);
+        return Utility.roundOff((1 + RideConstants.SERVICE_TAX) * amountWithoutTax);
     }
 }

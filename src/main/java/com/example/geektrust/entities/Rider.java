@@ -23,7 +23,7 @@ public class Rider {
     }
 
     public void findNearestDrivers(DriverRegistry driverRegistry) {
-        PriorityQueue<DriverDistancePair> nearestDriverMap =
+        PriorityQueue<DriverDistancePair> nearestDriverHeap =
                 new PriorityQueue<>((d1, d2) -> {
                     if(d1.distance.equals(d2.distance)) {
                         return d1.driver.compareTo(d2.driver);
@@ -32,16 +32,18 @@ public class Rider {
                 });
 
         for(Driver driver: driverRegistry.getAllDrivers()) {
+            if(driver.isDriverOccupied())
+                continue;
             double distance = Utility.calculateDistance(this.location, driver.getLocation());
             if(distance > RiderConstants.RIDER_RADIUS)
                 continue;
 
-            nearestDriverMap.add(new DriverDistancePair(driver, distance));
+            nearestDriverHeap.add(new DriverDistancePair(driver, distance));
         }
 
         matchedDrivers.clear();
-        for (int i = 0; i < RiderConstants.MAX_NEAREST_DRIVERS && !nearestDriverMap.isEmpty(); i++) {
-            matchedDrivers.add(nearestDriverMap.poll().driver);
+        for (int i = 0; i < RiderConstants.MAX_NEAREST_DRIVERS && !nearestDriverHeap.isEmpty(); i++) {
+            matchedDrivers.add(nearestDriverHeap.poll().driver);
         }
 
         printNearestDrivers();

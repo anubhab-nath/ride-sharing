@@ -22,13 +22,11 @@ public class Ride {
             throw new InvalidRideException();
         }
 
-        startRide(rider.getNthNearestDriver(driverNum), rider);
-    }
-
-    private void startRide(Driver driver, Rider rider) {
-        this.driver = driver;
         this.rider = rider;
+        this.driver = rider.getNthNearestDriver(driverNum);
+        driver.startRide();
         this.rideStatus = RideStatus.STARTED;
+
         System.out.println("RIDE_STARTED " + this.id);
     }
 
@@ -37,13 +35,11 @@ public class Ride {
             throw new InvalidRideException();
         }
 
-        stop(destination, timeTakenInMin);
-    }
-
-    private void stop(Location destination, Integer timeTakenInMin) {
+        driver.stopRide();
         this.destination = destination;
         this.timeTakenInMin = timeTakenInMin;
         this.rideStatus = RideStatus.COMPLETED;
+
         System.out.println("RIDE_STOPPED " + this.id);
     }
 

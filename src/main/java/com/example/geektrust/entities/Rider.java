@@ -1,6 +1,6 @@
 package com.example.geektrust.entities;
 
-import com.example.geektrust.constants.RiderKeywords;
+import com.example.geektrust.constants.RiderConstants;
 import com.example.geektrust.registers.DriverRegistry;
 
 import java.util.ArrayList;
@@ -28,13 +28,13 @@ public class Rider {
 
         for(Driver driver: driverRegistry.getAllDrivers()) {
             double distance = calculateDistance(this.location, driver.getLocation());
-            if(distance > RiderKeywords.RIDER_RADIUS)
+            if(distance > RiderConstants.RIDER_RADIUS)
                 continue;
 
             nearestDriverMap.add(new DriverDistancePair(driver, distance));
         }
 
-        for(int i = 0; i < RiderKeywords.MAX_NEAREST_DRIVERS; i++) {
+        for(int i = 0; i < RiderConstants.MAX_NEAREST_DRIVERS; i++) {
             if(!nearestDriverMap.isEmpty()) {
                 matchedDrivers.add(nearestDriverMap.poll().driver);
             }
@@ -64,22 +64,11 @@ public class Rider {
         return (int) decimal + 1;
     }
 
-    public void startRide(Ride ride, Integer driverNum) {
-        if(isDriverNotAvailable(driverNum) || ride.alreadyExists()) {
-            System.out.println("INVALID_RIDE");
-            return;
-        }
-
-        Driver driver = getNthNearestDriver(driverNum);
-        ride.start(this, driver);
-        ride.printRideId();
-    }
-
-    private boolean isDriverNotAvailable(Integer driverNum) {
+    public boolean isDriverNotAvailable(Integer driverNum) {
         return matchedDrivers.size() < driverNum;
     }
 
-    private Driver getNthNearestDriver(int driverNum) {
+    public Driver getNthNearestDriver(int driverNum) {
         return matchedDrivers.get(driverNum - 1);
     }
 

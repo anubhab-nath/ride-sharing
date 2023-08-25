@@ -3,6 +3,7 @@ package com.example.geektrust.commands.command_spec;
 import com.example.geektrust.commands.Command;
 import com.example.geektrust.entities.Location;
 import com.example.geektrust.entities.Ride;
+import com.example.geektrust.exceptions.InvalidRideException;
 import com.example.geektrust.registers.RideRegistry;
 
 public class StopRideCommand implements Command {
@@ -26,6 +27,10 @@ public class StopRideCommand implements Command {
 
     @Override
     public void execute() {
-//        ride.stopRide(destination, timeTakenInMin);
+        try {
+            ride.stopRide(destination, timeTakenInMin);
+        } catch (InvalidRideException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

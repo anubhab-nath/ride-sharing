@@ -3,6 +3,7 @@ package com.example.geektrust.commands.command_spec;
 import com.example.geektrust.commands.Command;
 import com.example.geektrust.entities.Ride;
 import com.example.geektrust.entities.Rider;
+import com.example.geektrust.exceptions.InvalidRideException;
 import com.example.geektrust.registers.RideRegistry;
 import com.example.geektrust.registers.RiderRegistry;
 
@@ -27,6 +28,10 @@ public class StartRideCommand implements Command {
 
     @Override
     public void execute() {
-        rider.startRide(ride, driverNum);
+        try {
+            ride.startRide(rider, driverNum);
+        } catch (InvalidRideException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -13,7 +13,7 @@ public class Utility {
     public static double calculateDistance(Location riderPos, Location driverPos) {
         double xDiff = (double) riderPos.getX() - driverPos.getX();
         double yDiff = (double) riderPos.getY() - driverPos.getY();
-        return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+        return roundOff(Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2)));
     }
 
     public static double roundOff(double value) {

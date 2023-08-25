@@ -39,14 +39,15 @@ public class Rider {
             nearestDriverMap.add(new DriverDistancePair(driver, distance));
         }
 
-        for(int i = 0; i < RiderConstants.MAX_NEAREST_DRIVERS; i++) {
-            if(!nearestDriverMap.isEmpty()) {
-                matchedDrivers.add(nearestDriverMap.poll().driver);
-            }
+        matchedDrivers.clear();
+        for (int i = 0; i < RiderConstants.MAX_NEAREST_DRIVERS && !nearestDriverMap.isEmpty(); i++) {
+            matchedDrivers.add(nearestDriverMap.poll().driver);
         }
+
+        printNearestDrivers();
     }
 
-    public void printNearestDrivers() {
+    private void printNearestDrivers() {
         if(matchedDrivers.isEmpty()) {
             System.out.println("NO_DRIVERS_AVAILABLE");
             return;

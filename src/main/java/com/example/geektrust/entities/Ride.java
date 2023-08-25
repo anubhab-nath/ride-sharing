@@ -22,10 +22,14 @@ public class Ride {
             throw new InvalidRideException();
         }
 
-        this.driver = rider.getNthNearestDriver(driverNum);
+        startRide(rider.getNthNearestDriver(driverNum), rider);
+    }
+
+    private void startRide(Driver driver, Rider rider) {
+        this.driver = driver;
         this.rider = rider;
         this.rideStatus = RideStatus.STARTED;
-        printRideStatus();
+        System.out.println("RIDE_STARTED " + this.id);
     }
 
     public void stopRide(Location destination, Integer timeTakenInMin) throws InvalidRideException {
@@ -33,10 +37,14 @@ public class Ride {
             throw new InvalidRideException();
         }
 
+        stop(destination, timeTakenInMin);
+    }
+
+    private void stop(Location destination, Integer timeTakenInMin) {
         this.destination = destination;
         this.timeTakenInMin = timeTakenInMin;
         this.rideStatus = RideStatus.COMPLETED;
-        printRideStatus();
+        System.out.println("RIDE_STOPPED " + this.id);
     }
 
     private boolean alreadyStopped() {
@@ -47,17 +55,10 @@ public class Ride {
         return rideStatus != RideStatus.CREATED;
     }
 
-    private void printRideStatus() {
-        if(rideStatus == RideStatus.STARTED)
-            System.out.println("RIDE_STARTED " + this.id);
-        if(rideStatus == RideStatus.COMPLETED)
-            System.out.println("RIDE_STOPPED " + this.id);
-    }
-
     public void calculateBill() throws InvalidRideException, InvalidCommand {
         if(rideStatus == RideStatus.CREATED)
             throw new InvalidRideException();
-        if(rideStatus != RideStatus.COMPLETED)
+        else if(rideStatus != RideStatus.COMPLETED)
             throw new InvalidCommand();
 
         double distanceCovered = Utility.calculateDistance(rider.getLocation(), destination);

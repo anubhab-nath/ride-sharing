@@ -23,6 +23,5 @@ public class MatchCommand implements Command {
     @Override
     public void execute() {
         rider.findNearestDrivers(driverRegistry);
-        rider.printNearestDrivers();
     }
 }

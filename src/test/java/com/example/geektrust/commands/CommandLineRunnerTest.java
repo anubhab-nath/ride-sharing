@@ -16,7 +16,7 @@ class CommandLineRunnerTest {
 
     @Test
     void testRun_WhenValidFile() {
-        String file = "sample_input/input3.txt";
+        String file = "sample_input/input2.txt";
         assertDoesNotThrow(() -> runner.run(file), "Provide a valid file");
     }
 }

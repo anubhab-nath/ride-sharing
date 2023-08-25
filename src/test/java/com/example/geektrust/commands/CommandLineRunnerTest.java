@@ -19,8 +19,4 @@ class CommandLineRunnerTest {
         String file = "sample_input/input3.txt";
         assertDoesNotThrow(() -> runner.run(file), "Provide a valid file");
     }
-
-    void testIf_AddDriverCommand_UpdatesDriverRegistry() {
-
-    }
 }

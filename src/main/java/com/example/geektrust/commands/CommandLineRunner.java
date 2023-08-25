@@ -2,6 +2,7 @@ package com.example.geektrust.commands;
 
 import com.example.geektrust.commands.command_spec.AddDriverCommand;
 import com.example.geektrust.commands.command_spec.AddRiderCommand;
+import com.example.geektrust.commands.command_spec.BillCommand;
 import com.example.geektrust.commands.command_spec.MatchCommand;
 import com.example.geektrust.commands.command_spec.StartRideCommand;
 import com.example.geektrust.commands.command_spec.StopRideCommand;
@@ -32,12 +33,14 @@ public class CommandLineRunner {
         MatchCommand matchCommand = new MatchCommand(driverRegistry, riderRegistry);
         StartRideCommand startRideCommand = new StartRideCommand(riderRegistry, rideRegistry);
         StopRideCommand stopRideCommand = new StopRideCommand(rideRegistry);
+        BillCommand billCommand = new BillCommand(rideRegistry);
 
         commandRegistry.setCommand(CommandKeywords.ADD_DRIVER, addDriverCommand);
         commandRegistry.setCommand(CommandKeywords.ADD_RIDER, addRiderCommand);
         commandRegistry.setCommand(CommandKeywords.MATCH, matchCommand);
         commandRegistry.setCommand(CommandKeywords.START_RIDE, startRideCommand);
         commandRegistry.setCommand(CommandKeywords.STOP_RIDE, stopRideCommand);
+        commandRegistry.setCommand(CommandKeywords.BILL, billCommand);
     }
 
     public void run(String file) {

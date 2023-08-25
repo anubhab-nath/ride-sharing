@@ -2,6 +2,7 @@ package com.example.geektrust.entities;
 
 import com.example.geektrust.constants.RiderConstants;
 import com.example.geektrust.registers.DriverRegistry;
+import com.example.geektrust.services.Utility;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -17,17 +18,21 @@ public class Rider {
         this.location = location;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
     public void findNearestDrivers(DriverRegistry driverRegistry) {
         PriorityQueue<DriverDistancePair> nearestDriverMap =
                 new PriorityQueue<>((d1, d2) -> {
                     if(d1.distance == d2.distance) {
                         return d1.driver.compareTo(d2.driver);
                     }
-                    return ceil(d1.distance - d2.distance);
+                    return Utility.ceil(d1.distance - d2.distance);
                 });
 
         for(Driver driver: driverRegistry.getAllDrivers()) {
-            double distance = calculateDistance(this.location, driver.getLocation());
+            double distance = Utility.calculateDistance(this.location, driver.getLocation());
             if(distance > RiderConstants.RIDER_RADIUS)
                 continue;
 
@@ -52,16 +57,6 @@ public class Rider {
                 .map(Driver::getId)
                 .collect(Collectors.joining(" "))
         );
-    }
-
-    private double calculateDistance(Location riderPos, Location driverPos) {
-        double xDiff = (double) riderPos.x - driverPos.x;
-        double yDiff = (double) riderPos.y - driverPos.y;
-        return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
-    }
-
-    private int ceil(double decimal) {
-        return (int) decimal + 1;
     }
 
     public boolean isDriverNotAvailable(Integer driverNum) {

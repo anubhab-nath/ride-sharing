@@ -25,10 +25,10 @@ public class Rider {
     public void findNearestDrivers(DriverRegistry driverRegistry) {
         PriorityQueue<DriverDistancePair> nearestDriverMap =
                 new PriorityQueue<>((d1, d2) -> {
-                    if(d1.distance == d2.distance) {
+                    if(d1.distance.equals(d2.distance)) {
                         return d1.driver.compareTo(d2.driver);
                     }
-                    return Utility.ceil(d1.distance - d2.distance);
+                    return d1.distance.compareTo(d2.distance);
                 });
 
         for(Driver driver: driverRegistry.getAllDrivers()) {
@@ -70,9 +70,9 @@ public class Rider {
 
     static class DriverDistancePair {
         Driver driver;
-        double distance;
+        Double distance;
 
-        DriverDistancePair(Driver driver, double distance) {
+        DriverDistancePair(Driver driver, Double distance) {
             this.driver = driver;
             this.distance = distance;
         }

@@ -16,10 +16,6 @@ public class Utility {
         return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
     }
 
-    public static int ceil(double decimal) {
-        return (int) decimal + 1;
-    }
-
     public static double roundOff(double value) {
         BigDecimal decimal = BigDecimal.valueOf(value);
         return decimal.setScale(ROUND_UP_PLACE, RoundingMode.HALF_UP)

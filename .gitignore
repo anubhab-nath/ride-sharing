@@ -33,6 +33,3 @@ jacoco.xml
 
 #Intellij files
 .idea
-
-#Analysis
-analysis

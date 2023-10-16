@@ -37,6 +37,10 @@ public class DriverRegistry {
             nearestDriverHeap.add(new DriverDistancePair(driver, distance));
         }
 
+        return extractMaxNearestDrivers(nearestDriverHeap);
+    }
+
+    private List<Driver> extractMaxNearestDrivers(PriorityQueue<DriverDistancePair> nearestDriverHeap) {
         ArrayList<Driver> matchedDrivers = new ArrayList<>();
         for (int i = 0; i < RiderConstants.MAX_NEAREST_DRIVERS && !nearestDriverHeap.isEmpty(); i++) {
             matchedDrivers.add(nearestDriverHeap.poll().driver);
